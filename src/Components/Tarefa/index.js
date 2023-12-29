@@ -1,7 +1,7 @@
 import "./Tarefa.css";
 import { BsXCircleFill } from "react-icons/bs";
 
-export default function Tarefa({tarefa, removeTarefa, handleMudancaTitulo}){
+export default function Tarefa({tarefa, removeTarefa, handleMudancaTitulo, handleCheckboxClicado}){
     const mudaParaInput = () => {
         let paragrafo = document.querySelector(".app__section-task-list-item-description");
         let titulo = paragrafo.innerHTML;
@@ -22,10 +22,15 @@ export default function Tarefa({tarefa, removeTarefa, handleMudancaTitulo}){
         document.querySelector(".app__section-task-list-item").replaceChild(paragrafo, input);
     };
 
+    const selecionaTarefa = (id) => {
+        tarefas.filter(tarefa => tarefa.selecionada )
+    }
+
     return(
-        <li className="app__section-task-list-item" key={tarefa.id}>
-            <input type="checkbox" onChange={() => tarefa.concluida = !tarefa.concluida} 
-            checked={tarefa.concluida ? 'checked' : false } /> 
+        <li className={tarefa.selecionada ? "app__section-task-list-item app__section-task-list-item-active" : "app__section-task-list-item"} key={tarefa.id}>
+            <input className={tarefa.selecionada ? "toggle-switch" : ""}
+            type="checkbox" onChange={() => handleCheckboxClicado(tarefa.id)} 
+            checked={tarefa.selecionada ? 'checked' : false } /> 
             <p className="app__section-task-list-item-description"
                 onClick={mudaParaInput}
             >

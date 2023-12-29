@@ -8,17 +8,20 @@ export default function MenuTarefas({tempo}){
         {   
             id: 1,
             descricao: 'Tarefa concluída',
-            concluida: true
+            selecionada: true,
+            concluida: false
         },
         {
             id: 2,
             descricao: 'Tarefa pendente',
+            selecionada: false,
             concluida: false
         },
         {
             id: 3,
             descricao: 'Tarefa concluída',
-            concluida: true
+            selecionada: false,
+            concluida: false
         }
     ]);
 
@@ -26,7 +29,7 @@ export default function MenuTarefas({tempo}){
         let novaTarefa = {
             id: (tarefas.length + 1),
             descricao: 'nova tarefa',
-            concluida: false
+            selecionada: false
         };
         setTarefas([...tarefas, novaTarefa]);
     }
@@ -35,8 +38,8 @@ export default function MenuTarefas({tempo}){
         setTarefas(tarefas => tarefas.filter(tarefa => tarefa.id !== id));
     }
 
-    const limparTarefasConcluidas = () => {
-        setTarefas(tarefas => tarefas.filter(tarefa => tarefa.concluida === false));
+    const limparTarefasSelecionadas = () => {
+        setTarefas(tarefas => tarefas.filter(tarefa => tarefa.selecionada === false));
     }
 
     const limparTodasTarefas = () => {
@@ -48,14 +51,18 @@ export default function MenuTarefas({tempo}){
             <div className="app__section-task-content">
                 <header className="app__section-active-task">
                     <p className="app__section-active-task-label">#Em andamento:</p>
+                    <p className="app__section-active-task-description">
+                        {tarefas.filter(tarefa => tarefa.selecionada)[0].descricao}
+                    </p>
+                    <br/>
                     <div className="app__section-active-task-description">
-                        {(new Date(tempo*1000)
-                        .toLocaleTimeString('pt-Br', 
-                        {
-                            minute: '2-digit', 
-                            second: '2-digit', 
-                            tempoZone: 'UTC'
-                        }))}
+                        <p>{(new Date(tempo*1000)
+                            .toLocaleTimeString('pt-Br', 
+                            {
+                                minute: '2-digit', 
+                                second: '2-digit', 
+                                tempoZone: 'UTC'
+                            }))}</p>    
                     </div>
                 </header>
                 <div className="app__section-task-header">
@@ -66,7 +73,7 @@ export default function MenuTarefas({tempo}){
                         </button>
                         <ul className="app__section-task-header__ul">
                             <li className="app__section-task-header__li">
-                                <button className="app__section-task-header__li__button" id="btn-remover-concluidas" onClick={limparTarefasConcluidas}>
+                                <button className="app__section-task-header__li__button" id="btn-remover-selecionadas" onClick={limparTarefasSelecionadas}>
                                     <img src="./imagens/check.svg" alt=""/>
                                     Limpar tarefas concluídas
                                 </button>
