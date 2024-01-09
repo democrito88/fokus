@@ -22,6 +22,10 @@ export default function ListaTarefas({tarefas, setTarefas, removeTarefa}){
         }));
     }
 
+    const selecionaTarefa = (id) => {
+        tarefas.filter(tarefa => tarefa.selecionada )
+    }
+
     return (
         <ul className="app__section-task-list">
             {tarefas.map(tarefa => <Tarefa 
@@ -29,7 +33,8 @@ export default function ListaTarefas({tarefas, setTarefas, removeTarefa}){
                 removeTarefa={removeTarefa} 
                 setTarefas={setTarefas}
                 handleMudancaTitulo={handleMudancaTitulo}
-                handleCheckboxClicado={handleCheckboxClicado} />)}
+                handleCheckboxClicado={handleCheckboxClicado}
+                selecionaTarefa={selecionaTarefa} />)}
         </ul>
     );
 }
